@@ -37,33 +37,59 @@ class Node {
 
 	remove() {
         if (this.parent != null) {
-            removeChild(this.left);
-            removeChild(this.right);
+            /*this.removeChild(this.left);
+            this.removeChild(this.right);*/
+            this.parent.removeChild(this);
         }
 	}
 
 	swapWithParent() {
-		if (this.parent != null) {
-            var leftChild = this.left;
-            var rightChild = this.right;
-            this.removeChild(leftChild);
-            this.removeChild(rightChild);
-            var parentChild;
-            if (this.parent.left != this) 
-                parentChild = this.parent.left;
-            else 
-                parentChild = this.parent.right;
-            this.parent.removeChild(parentChild);
-            this.appendChild(parentChild);
-            var parentOfParent = this.parent.parent;
+		if (this.parent == null) return;
+            /*var parentOfParent = this.parent.parent;
             var parent = this.parent;
-            parent.removeChild(this);
-            parent.appendChild(leftChild);
-            parent.appendChild(rightChild);
-            parentOfParent.removeChild(parent);
-            parentOfParent.appendChild(this);
-            this.appendChild(parent);
-        }
+            this.parent.parent = this;
+            this.parent = parentOfParent;
+            
+            if (this.parent.left.data == this.data && 
+               this.parent.left.priority == this.priority) {
+                this.parent.left.parent = this;
+            }
+            else 
+                this.parent.right.parent = this;*/
+            
+            /*var parentOfParent = this.parent.parent;
+            var parent = this.parent;*/
+            
+            
+            
+            if (this.parent.left.data == this.data && 
+               this.parent.left.priority == this.priority) {
+                this.parent.left = this.left;
+                this.left.parent = this.parent;
+                this.left = this.parent.right;
+                this.parent.right.parent = this;
+                this.parent.right = this.right;
+                this.right.parent = this.parent;
+            }
+            else {
+                this.parent.right = this.right;
+                this.right.parent = this.parent;
+                this.right = this.parent.left;
+                this.parent.left.parent = this;
+                this.parent.left = this.left;
+                this.left.parent = this.parent;
+            } 
+            
+            if (this.parent.parent.left.data == this.parent.data && this.parent.parent.left.priority == this.parent.priority)
+                this.parent.parent.left = this;
+            else 
+                this.parent.parent.right = this;
+            var parentOfParent = this.parent.parent;
+            this.parent.parent = this;
+            this.parent = parentOfParent;
+            
+        
+        
 	}
 }
 
