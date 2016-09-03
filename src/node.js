@@ -15,7 +15,7 @@ class Node {
         else {
             if (this.right == null) {
                 this.right = node;
-                node.child = this;
+                node.parent = this;
             }
         }
         
@@ -45,48 +45,50 @@ class Node {
 
 	swapWithParent() {
 		if (this.parent == null) return;
-            /*var parentOfParent = this.parent.parent;
-            var parent = this.parent;
-            this.parent.parent = this;
-            this.parent = parentOfParent;
+        
+        if (this.parent.left.data == this.data && 
+           this.parent.left.priority == this.priority) {
             
-            if (this.parent.left.data == this.data && 
-               this.parent.left.priority == this.priority) {
-                this.parent.left.parent = this;
-            }
-            else 
+            this.parent.left = this.left;
+            if (this.left != null)
+                this.left.parent = this.parent;
+            this.left = this.right;
+            if (this.left != null)
+                this.left.parent = this.parent;
+            this.right = this.parent.right;
+            /*if (this.parent.right != null)
                 this.parent.right.parent = this;*/
+            this.parent.right = this.left;
+            this.left = this.parent;
+            if (this.right != null)
+                this.right.parent = this;
+        }
+        else {
             
-            /*var parentOfParent = this.parent.parent;
-            var parent = this.parent;*/
-            
-            
-            
-            if (this.parent.left.data == this.data && 
-               this.parent.left.priority == this.priority) {
-                this.parent.left = this.left;
-                this.left.parent = this.parent;
-                this.left = this.parent.right;
-                this.parent.right.parent = this;
-                this.parent.right = this.right;
+            this.parent.right = this.right;
+            if (this.right != null)
                 this.right.parent = this.parent;
-            }
-            else {
-                this.parent.right = this.right;
+            this.right = this.left;
+            if (this.right != null)
                 this.right.parent = this.parent;
-                this.right = this.parent.left;
-                this.parent.left.parent = this;
-                this.parent.left = this.left;
-                this.left.parent = this.parent;
-            } 
-            
-            if (this.parent.parent.left.data == this.parent.data && this.parent.parent.left.priority == this.parent.priority)
+            this.left = this.parent.left;
+            /*if (this.parent.left != null)
+                this.parent.left.parent = this;*/
+            this.parent.left = this.right;
+            this.right = this.parent;
+            if (this.left != null)
+                this.left.parent = this;
+        }
+
+        if (this.parent.parent != null){
+        if (this.parent.parent.left.data == this.parent.data && this.parent.parent.left.priority == this.parent.priority)
                 this.parent.parent.left = this;
             else 
                 this.parent.parent.right = this;
-            var parentOfParent = this.parent.parent;
-            this.parent.parent = this;
-            this.parent = parentOfParent;
+        }
+        var parentOfParent = this.parent.parent;
+        this.parent.parent = this;
+        this.parent = parentOfParent;
             
         
         

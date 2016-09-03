@@ -147,13 +147,14 @@ describe('Node', () => {
 			const root = new Node(1, 2);
 			const left = new Node(3, 4);
 			const right = new Node(5, 6);
-
+            
+            
 			root.appendChild(left);
 			root.appendChild(right);
 
-			right.swapWithParent();
-
-			expect(left.parent).to.equal(right);
+            right.swapWithParent();
+            
+            expect(left.parent).to.equal(right);
 		})
 
 		it('updates children of node and parent node', () => {
