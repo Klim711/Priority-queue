@@ -17,6 +17,8 @@ class MaxHeap {
             var detached = this.detachRoot();
             this.restoreRootFromLastInsertedNode(detached);
             this.shiftNodeDown(this.root);
+            if (detached.left == null)
+                this.root = null;
             return detached.data;
         }
 	}
@@ -48,11 +50,16 @@ class MaxHeap {
         
         if (detached.right == null) 
             this.parentNodes[0] = lastInsertedNode;
-        else
+        else {
             if (detached.right == lastInsertedNode) {
-                this.parentNodes[1] = this.parentNodes[0];
-                this.parentNodes[0] = lastInsertedNode;
-            }
+                /*this.parentNodes[1] = this.parentNodes[0];
+                this.parentNodes[0] = lastInsertedNode;*/
+                this.parentNodes.unshift(lastInsertedNode);
+            } else
+                if (lastInsertedNode.parent.right == lastInsertedNode)
+                    this.parentNodes.unshift(lastInsertedNode.parent);
+                    
+        }
         if (lastInsertedNode.parent != null)
             lastInsertedNode.remove();
         this.root = lastInsertedNode;
@@ -75,7 +82,7 @@ class MaxHeap {
     }
     
 	isEmpty() {
-		return this.root == null;
+		return (this.root == null);
 	}
 
 	clear() {

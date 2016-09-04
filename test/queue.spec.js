@@ -84,6 +84,15 @@ describe('PriorityQueue', () => {
 			const expectedData = [2, 7, 8, 6, 1, 5, 3, 4]
 
 			nodes.forEach(node => q.push(node.data, node.priority));
+                        
+          
+            //var detached = q.heap.detachRoot();
+            //expect(q.heap.parentNodes.length).to.equal(100);
+            //expect(q.heap.parentNodes[3].priority).to.equal(99);
+            //expect(q.heap.root.priority).to.equal(98);
+            //q.heap.restoreRootFromLastInsertedNode(detached);
+            //expect(q.heap.parentNodes.length).to.equal(100);
+                        
 			expectedData.forEach(d => expect(q.shift()).to.equal(d));
 		});
 
@@ -112,7 +121,7 @@ describe('PriorityQueue', () => {
 
 			q.push(1, 2);
 			expect(q.size()).to.equal(2);
-
+            
 			q.push(2, 3);
 			expect(q.size()).to.equal(3);
 

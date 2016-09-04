@@ -31,7 +31,7 @@ class Node {
                 this.right = null;
                 node.parent = null;
             }
-            else this.throw();
+            else throw new Error("Passed node is not a child of this node!");
         }
 	}
 
